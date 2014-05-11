@@ -1,0 +1,15 @@
+x = read.table("consumption.txt", header = TRUE, sep=";")
+x1 = x[x$Date=="1/2/2007" |x$Date=="2/2/2007", ]
+A = strptime(paste(x1$Date,x1$Time), format = "%d/%m/%Y %H:%M:%S")
+
+png(filename = "plot4.png",bg = "transparent")
+par(mfrow = c(2,2))
+plot(A,as.numeric(as.character(x1$Global_active_power)),type = "l", xlab = "", ylab = "Global Active Power",bg = "transparent")
+plot(A,as.numeric(as.character(x1$Voltage)),type = "l",xlab = "datetime", ylab = "Voltage",bg = "transparent")
+plot(A,as.numeric(as.character(x1$Sub_metering_1)),type = "l", xlab = "", ylab = "Energy sub metering",bg = "transparent")
+lines(A,as.numeric(as.character(x1$Sub_metering_2)), col = "red")
+lines(A,as.numeric(as.character(x1$Sub_metering_3)), col = "blue")
+legend("topright", 39.5, c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),lty=1,col =c("black","red","blue"),cex=0.75,bty="n")
+plot(A,as.numeric(as.character(x1$Global_reactive_power)),type = "l",xlab = "datetime", ylab = "Global_reactive_power",bg = "transparent")
+axis(2,c(0.1,0.3,0.5))
+dev.off()
